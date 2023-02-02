@@ -5,6 +5,10 @@ from rest_framework import generics
 from flights import serializers
 from flights.models import Booking, Flight
 
+from rest_framework.generics import CreateAPIView
+from .serializers import UserCreateSerializer
+
+
 
 class FlightsList(generics.ListAPIView):
     queryset = Flight.objects.all()
@@ -41,3 +45,6 @@ class BookFlight(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user, flight_id=self.kwargs["flight_id"])
+
+class UserCreateAPIView(CreateAPIView):
+    serializer_class = UserCreateSerializer
